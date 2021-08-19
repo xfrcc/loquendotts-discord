@@ -1,0 +1,99 @@
+{
+    "voz": [
+        {
+            "nombre": "carlos",
+            "id": 7,
+            "engine": 2
+        },
+        {
+            "nombre": "carmen",
+            "id": 1,
+            "engine": 2
+        },
+        {
+            "nombre": "diego",
+            "id": 4,
+            "engine": 2
+        },
+        {
+            "nombre": "duardo",
+            "id": 1,
+            "engine": 4
+        },
+        {
+            "nombre": "esperanza",
+            "id": 5,
+            "engine": 2
+        },
+        {
+            "nombre": "francisca",
+            "id": 3,
+            "engine": 2
+        },
+        {
+            "nombre": "francisco",
+            "id": 2,
+            "engine": 3
+        },
+        {
+            "nombre": "gloria",
+            "id": 3,
+            "engine": 3
+        },
+        {
+            "nombre": "javier",
+            "id": 5,
+            "engine": 4
+        },
+        {
+            "nombre": "jorge",
+            "id": 6,
+            "engine": 2
+        },
+        {
+            "nombre": "juan",
+            "id": 2,
+            "engine": 2
+        },
+        {
+            "nombre": "leonor",
+            "id": 9,
+            "engine": 2
+        },
+        {
+            "nombre": "lola",
+            "id": 4,
+            "engine": 3
+        },
+        {
+            "nombre": "manuel",
+            "id": 5,
+            "engine": 3
+        },
+        {
+            "nombre": "monica",
+            "id": 3,
+            "engine": 4
+        },
+        {
+            "nombre": "paulina",
+            "id": 4,
+            "engine": 4
+        },
+        {
+            "nombre": "soledad",
+            "id": 8,
+            "engine": 2
+        },
+        {
+            "nombre": "violeta",
+            "id": 1,
+            "engine": 3
+        },
+        {
+            "nombre": "ximena",
+            "id": 10,
+            "engine": 2
+        }
+    ]
+}

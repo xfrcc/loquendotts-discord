@@ -1,0 +1,12 @@
+{
+  "name": "loquendotts",
+  "version": "2.0.0",
+  "description": "tts para discord",
+  "main": "main.js",
+  "scripts": {
+    "test": "node main.js"
+  },
+  "author": "frcc",
+  "license": "ISC",
+  "dependencies": {}
+}
