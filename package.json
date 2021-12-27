@@ -1,12 +1,20 @@
 {
-  "name": "loquendotts",
-  "version": "2.0.0",
-  "description": "tts para discord",
-  "main": "main.js",
+  "name": "loquendottsds",
+  "version": "2.1.0",
+  "main": "index.js",
   "scripts": {
-    "test": "node main.js"
+    "start": "node index.js"
   },
+  "keywords": [],
   "author": "frcc",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "@discordjs/builders": "^0.10.0",
+    "@discordjs/rest": "^0.2.0-canary.0",
+    "@discordjs/voice": "^0.7.5",
+    "discord-api-types": "^0.26.0",
+    "discord.js": "^13.4.0",
+    "ffmpeg-static": "^4.4.0",
+    "libsodium-wrappers": "^0.7.9"
+  }
 }
