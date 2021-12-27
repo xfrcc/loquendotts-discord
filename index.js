@@ -1,23 +1,21 @@
+
 const { Client, Collection, Intents } = require("discord.js");
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const fs = require("fs");
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES] });
-const { clientId, guildId, token } = require('./config.json');
 client.login(token);
 const crypto = require('crypto');
-const  buildUrl = require('build-url');
 const comandos = [];
 global.listaBlanca = ['693308496011067423','758883048712044614'];
 let timeoutID;
 global.modo_filtro = false;
 global.voces  = require('./comandos/data/voces.js');
-global.nombreVoz = voces.jorge;
+global.nombreVoz = voces['jorge'];
 global.fx_type = null;
 global.fx_level = null;
 
 const prefix = 'v';
-let esta_sonando;
 client.commands = new Collection();
 const {
     createAudioResource, getVoiceConnection,
@@ -66,11 +64,10 @@ client.on("ready", ()=> {
 
 client.on("messageCreate", message => {
     if (!message.content.toLowerCase().startsWith(prefix) || message.author.bot || message.content[1] != ' ') return;
-    else if (esta_sonando) return message.reply('Ya hay un mensaje reproduciendose, espera que termine.');
-    const texto = message.content.slice(prefix.length+1).toLowerCase();
-    if(modo_filtro){
+        if(modo_filtro){
       if (!listaBlanca.includes(message.author.id)) return;
     }
+    const texto = message.content.slice(prefix.length+1).toLowerCase();
     if (!message.member.voice.channel) return message.reply('No canal de voz, no fun');
     else if (texto.length > 600) return message.reply('No más de 600 caracteres');
     clearTimeout(timeoutID);
@@ -90,45 +87,16 @@ function voice_stream(channel, texto){
     const audio = obtenerUrl(texto);
     const resource = createAudioResource(audio);
     player.play(resource);
-    esta_sonando = true;
     player.on(AudioPlayerStatus.Idle, () => {
-        esta_sonando = false;
         timeoutID = setTimeout(() => {connection.destroy();}, 5*60000);
     });
 }
 
 function obtenerUrl(texto){
-    let fragments;
-    fx_type == null ? fragments = `<engineID>${nombreVoz.engine}</engineID><voiceID>${nombreVoz.id}</voiceID><langID>${nombreVoz.language.id}</langID><ext>mp3</ext>${texto}` : fragments = `<engineID>${nombreVoz.engine}</engineID><voiceID>${nombreVoz.id}</voiceID><langID>${nombreVoz.language.id}</langID><FX>${fx_type}${fx_level}</FX><ext>mp3</ext>${texto}`;
-    const hash = crypto.createHash('md5').update(fragments).digest('hex');
-    let url;
-    fx_type == null ? url = buildUrl(
-      'https://cache-a.oddcast.com',
-      {
-        path: `c_fs/${hash}.mp3`,
-        queryParams: {
-          engine: nombreVoz.engine,
-          language: nombreVoz.language.id,
-          voice: nombreVoz.id,
-          text: texto,
-          useUTF8: 1,
-        }
-      }
-    ) : url = buildUrl(
-        'https://cache-a.oddcast.com',
-        {
-          path: `c_fs/${hash}.mp3`,
-          queryParams: {
-            engine: nombreVoz.engine,
-            language: nombreVoz.language.id,
-            voice: nombreVoz.id,
-            text: texto,
-            useUTF8: 1,
-            fx_type: fx_type,
-            fx_level: fx_level,
-          }
-        }
-      );
+    const fragments = [`<engineID>${nombreVoz.engine}</engineID>`, `<voiceID>${nombreVoz.id}</voiceID>`, `<langID>${nombreVoz.language.id}</langID>`, fx_type != null ? `<FX>${fx_type}${fx_level}</FX>` : '',`<ext>mp3</ext>${texto}`];
+    const hash = crypto.createHash('md5').update(fragments.join('')).digest('hex');
+
+    const url = `https://cache-a.oddcast.com/c_fs/${hash}.mp3?engine=${nombreVoz.engine}&language=${nombreVoz.language.id}&voice=${nombreVoz.id}&text=${texto}&useUTF8=1${fx_type != null ? '&fx_type='+fx_type+'&fx_level='+fx_level : ''}`;
     return url;
   }
   client.on('interactionCreate', async interaction => {
